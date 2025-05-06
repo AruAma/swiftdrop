@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SwiftDrop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/725/725643.png" type="image/png">
+    <style>
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      textarea,
+      select {
+          @apply w-full px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200;
+      }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <nav class="bg-gray-800 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/725/725643.png" alt="Logo" class="w-8 h-8">
+                <span class="text-xl font-bold">SwiftDrop</span>
+            </div>
+            <div class="space-x-4">
+                <a href="/messages" class="hover:text-blue-400">Messages</a>
+                <a href="/files" class="hover:text-blue-400">Files</a>
+                <a href="/login" class="hover:text-blue-400">Login</a>
+                <a href="/logout" class="hover:text-blue-400">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto mt-8 p-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

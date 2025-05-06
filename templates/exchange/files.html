@@ -1,0 +1,42 @@
+{% block content %}
+{% load widget_tweaks %}
+<div class="max-w-2xl mx-auto mt-10 bg-gray-800 p-8 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center">Send a File</h2>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="recipient" class="block text-sm font-medium text-gray-300 mb-1">To:</label>
+            <input type="text" name="recipient" required
+                class="w-full px-3 py-2 rounded-md bg-gray-900 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+            <label for="file" class="block text-sm font-medium text-gray-300 mb-1">Choose file:</label>
+            <input type="file" name="file" required
+                class="w-full px-3 py-2 bg-gray-900 text-white rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300">
+            Upload
+        </button>
+    </form>
+
+    <hr class="my-6 border-gray-600">
+
+    <h3 class="text-xl font-semibold mb-4">Shared Files</h3>
+    <ul class="space-y-2">
+        {% for file in files %}
+            <li class="bg-gray-700 p-4 rounded-md shadow-sm">
+                <strong class="text-blue-400">{{ file.uploader.username }}</strong>
+                → <strong class="text-blue-400">{{ file.recipient.username }}</strong>:
+                <a href="{{ file.file.url }}" download class="text-white underline hover:text-blue-300">
+                    {{ file.file.name }}
+                </a>
+                <div class="text-xs text-gray-400 mt-1">{{ file.uploaded_at }}</div>
+            </li>
+        {% empty %}
+            <li class="text-gray-400">No files shared yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
