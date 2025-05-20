@@ -9,10 +9,10 @@ class MessageSerializer(serializers.ModelSerializer):
         read_only_fields = ('sender', 'timestamp')
 
 class FileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = File
-        fields = '__all__'
-        read_only_fields = ('uploader', 'uploaded_at')
+    def validate_file(self, value):
+        if value.size > 10*1024*1024:
+            raise serializers.ValidationError("File too large (max 10MB)")
+        return value
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
