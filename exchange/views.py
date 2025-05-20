@@ -6,6 +6,23 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
 from .models import Message, File
 from django.db.models import Q
+from .models import Profile
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import ProfileForm
+
+@login_required
+def profile_view(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'exchange/profile.html', {'form': form})
+
 
 @csrf_protect
 def register_view(request):
