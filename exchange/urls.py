@@ -6,7 +6,11 @@ from .views import (
     messages_view, files_view, root_redirect, home_view
 )
 from rest_framework.authtoken.views import obtain_auth_token
+from .views import profile_view
 
+urlpatterns += [
+    path('profile/', profile_view, name='profile'),
+]
 router = DefaultRouter()
 router.register('messages', MessageViewSet)
 router.register('files', FileViewSet)
