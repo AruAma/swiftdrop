@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
 
+# api_views.py
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
@@ -65,6 +66,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+# views.py (for HTML views)
 @login_required
 def messages_view(request):
     if request.method == 'POST':
