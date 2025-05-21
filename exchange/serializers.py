@@ -1,19 +1,23 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Message, File
-from .models import Profile
+from .models import Message, File, Profile
 
+# --- Profile Serializer ---
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['avatar', 'bio']
 
+
+# --- Message Serializer ---
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = '__all__'
         read_only_fields = ('sender', 'timestamp')
 
+
+# --- File Serializer ---
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
@@ -34,6 +38,8 @@ class FileSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Unsupported file type.")
         return value
 
+
+# --- Registration Serializer ---
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     email = serializers.EmailField(required=False)
@@ -43,4 +49,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('username', 'password', 'email')
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+        Profile.objects.create(user=user)  # Автоматически создаёт профиль
+        return user
