@@ -6,4 +6,8 @@
     {{ form.as_p }}
     <button type="submit">Save</button>
 </form>
+{% if profile.avatar %}
+    <img src="{{ profile.avatar.url }}" alt="Avatar" width="100">
+{% endif %}
+<p>{{ profile.bio }}</p>
 {% endblock %}
