@@ -35,3 +35,4 @@ templates/
 ├── register.html
 ├── messages.html
 ├── files.html
+|-- profile.html
